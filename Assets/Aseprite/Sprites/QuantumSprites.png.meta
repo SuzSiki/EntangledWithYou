@@ -1,0 +1,460 @@
+fileFormatVersion: 2
+guid: e53e68cc57ad5624992f3b0f70b860c7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8781698005351965444
+    second: QuantumSprites 0
+  - first:
+      213: 6964943464310170615
+    second: QuantumSprites 1
+  - first:
+      213: 3648402195964844454
+    second: QuantumSprites 2
+  - first:
+      213: 7015410881842008304
+    second: QuantumSprites 3
+  - first:
+      213: 2976701500205419460
+    second: QuantumSprites 4
+  - first:
+      213: -5375725994717818746
+    second: QuantumSprites 5
+  - first:
+      213: 8196970223038126819
+    second: QuantumSprites 6
+  - first:
+      213: -7516620030644176554
+    second: QuantumSprites 7
+  - first:
+      213: -9134538789427611894
+    second: QuantumSprites 8
+  - first:
+      213: 6397232532079836954
+    second: QuantumSprites 9
+  - first:
+      213: 3338705569974203860
+    second: QuantumSprites 10
+  - first:
+      213: -6710967499428534459
+    second: QuantumSprites 11
+  - first:
+      213: -6675744614564289404
+    second: QuantumSprites 12
+  - first:
+      213: -3339097125347899008
+    second: QuantumSprites 13
+  - first:
+      213: 5976590404602447567
+    second: QuantumSprites 14
+  - first:
+      213: -7485327537559701780
+    second: QuantumSprites 15
+  - first:
+      213: -7482205210514086716
+    second: QuantumSprites 16
+  - first:
+      213: 7203194732110908169
+    second: QuantumSprites 17
+  - first:
+      213: 3539879382868853406
+    second: QuantumSprites 18
+  - first:
+      213: 7675699157159963599
+    second: QuantumSprites 19
+  - first:
+      213: -1958625409796679919
+    second: QuantumSprites 20
+  - first:
+      213: 4693989871106309276
+    second: QuantumSprites 21
+  - first:
+      213: 3967956962219629003
+    second: QuantumSprites 22
+  - first:
+      213: 8262224480617155938
+    second: QuantumSprites 23
+  - first:
+      213: 2173162897714441281
+    second: QuantumSprites 24
+  - first:
+      213: -135405701402412651
+    second: QuantumSprites 25
+  - first:
+      213: 3325599595904543163
+    second: QuantumSprites 26
+  - first:
+      213: 1645844098656257325
+    second: QuantumSprites 27
+  - first:
+      213: -774144303587958665
+    second: QuantumSprites 28
+  - first:
+      213: 815688000580332681
+    second: QuantumSprites 29
+  - first:
+      213: 1792289723006015248
+    second: QuantumSprites 30
+  - first:
+      213: 2489670662583218823
+    second: QuantumSprites 31
+  - first:
+      213: -9058528379943525208
+    second: QuantumSprites 32
+  - first:
+      213: 82997304639513284
+    second: QuantumSprites 33
+  - first:
+      213: 3248962307650858295
+    second: QuantumSprites 34
+  - first:
+      213: -1878721215469100238
+    second: QuantumSprites 35
+  - first:
+      213: 7946928572602631993
+    second: QuantumSprites 36
+  - first:
+      213: 2239358831871192627
+    second: QuantumSprites 37
+  - first:
+      213: 3499818277481283928
+    second: QuantumSprites_0
+  - first:
+      213: 7063298076792760068
+    second: QuantumSprites_1
+  - first:
+      213: -1479934841113095586
+    second: QuantumSprites_2
+  - first:
+      213: 4278096869299118817
+    second: QuantumSprites_3
+  - first:
+      213: 3302495203879474168
+    second: QuantumSprites_4
+  - first:
+      213: 833549663115996809
+    second: QuantumSprites_5
+  - first:
+      213: -890216553172156963
+    second: QuantumSprites_6
+  - first:
+      213: 34064273718572308
+    second: QuantumSprites_7
+  - first:
+      213: -5371854031806995580
+    second: QuantumSprites_8
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 1000
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 1000
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 1000
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 1000
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: QuantumSprites_0
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 900
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85101b73e2ad19030800000000000000
+      internalID: 3499818277481283928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QuantumSprites_1
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 900
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 407aee98d20e50260800000000000000
+      internalID: 7063298076792760068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QuantumSprites_2
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 900
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e52dab06a17367be0800000000000000
+      internalID: -1479934841113095586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QuantumSprites_3
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 800
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e2e841bf6ade5b30800000000000000
+      internalID: 4278096869299118817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QuantumSprites_4
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 800
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f3daabf3e1d4dd20800000000000000
+      internalID: 3302495203879474168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QuantumSprites_5
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 700
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98eeca4900d519b00800000000000000
+      internalID: 833549663115996809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QuantumSprites_6
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 700
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddd300fe2c055a3f0800000000000000
+      internalID: -890216553172156963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QuantumSprites_7
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 600
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 415f686c645097000800000000000000
+      internalID: 34064273718572308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QuantumSprites_8
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 500
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 483e4e828375375b0800000000000000
+      internalID: -5371854031806995580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
