@@ -6,7 +6,8 @@ public enum TurnState
 {
     notReady,
     turnReady,
-    inTurn
+    inTurn,
+    catchUp
 }
 
 public class GameManager : Singleton<GameManager>,ILoad
@@ -16,8 +17,18 @@ public class GameManager : Singleton<GameManager>,ILoad
 
     List<ITurnModule> turnModules = new List<ITurnModule>();
     List<ITurnModule> oneTimeRegister = new List<ITurnModule>();
+    List<ITurnModule> catchUpList = new List<ITurnModule>();
 
-    TurnState state;
+    Coroutine acceptableCatchup = null;
+
+    TurnState state{
+        get{return _state;}
+        set{
+            Debug.Log(value);
+            _state = value;
+        }
+    }
+    TurnState _state;
 
     protected override void Awake()
     {
@@ -46,10 +57,26 @@ public class GameManager : Singleton<GameManager>,ILoad
         return false;
     }
 
-    public void RegisterOnce(ITurnModule module){
-        oneTimeRegister.Add(module);
-    }
+    
+    public bool RegisterOnce(ITurnModule module){
+        if(state == TurnState.inTurn){
 
+            if(acceptableCatchup == null){
+                acceptableCatchup = StartCoroutine(CatchUpRoutine());
+            }
+
+            catchUpList.Add(module);
+
+
+            return true;
+        }
+        else
+        {
+            oneTimeRegister.Add(module);
+            
+            return true;
+        }
+    }
 
     public bool StartTurn()
     {
@@ -74,6 +101,24 @@ public class GameManager : Singleton<GameManager>,ILoad
         oneTimeRegister.Clear();
 
         state = TurnState.turnReady;
+    }
+
+    /// <summary>
+    /// ターンに追いつくためのルーチン。
+    /// 位置ターンごとに別のものが生成される
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator CatchUpRoutine(){
+        yield return new WaitUntil(()=>turnReady);
+        
+        //今回のターンの分はここで消す。
+        acceptableCatchup = null;
+        var modules = catchUpList;
+        catchUpList.Clear();
+
+        foreach(var module in modules){
+            yield return new WaitUntil(()=> module.state == ModuleState.compleate);
+        }
     }
 
 

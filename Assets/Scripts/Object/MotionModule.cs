@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.Assertions;
 
 
-public class MotionModule : GridMoveBase, ITurnModule, ISubject<Vector2Int>,IGameModule<Vector2Int>
+public class MotionModule : GridMoveBase, ITurnModule, ISubject<Vector2Int>, IGameModule<Vector2Int>
 {
     public ObjectAttribute attribute { get; protected set; }
 
@@ -28,26 +29,33 @@ public class MotionModule : GridMoveBase, ITurnModule, ISubject<Vector2Int>,IGam
         gameManager.RegisterOnce(this);
     }
 
-    public bool Command(Vector2Int direction){
-        if(Check(direction)){ 
+    public bool Command(Vector2Int direction)
+    {
+        if (Check(direction))
+        {
             state = ModuleState.working;
 
-            Move(direction,true);
+            Move(direction, null, true);
             return true;
         }
 
         return false;
     }
 
-    public void Move(Vector2Int direction,bool doNotNotice = false)
+    public void Move(Vector2Int direction, System.Action onCompleate = null, bool doNotNotice = false)
     {
+        state = ModuleState.working;
         //我こそがTurnModule
         RegisterOnce();
 
         Move(direction.x, direction.y, () =>
         {
+            if (onCompleate != null)
+            {
+                onCompleate();
+            }
             state = ModuleState.compleate;
-            if(!doNotNotice){Notice(direction);}
+            if (!doNotNotice) { Notice(direction); }
         });
     }
 

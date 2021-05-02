@@ -93,7 +93,13 @@ public abstract class SyncModuleBase<T> : SyncModuleBase, IObserver<T>
 
         foreach (var module in _syncedList)
         {
-            var result = module.Sync(memory);
+            var mem = memory;
+            
+            if(syncStateDict[module] != SyncStateFlag.entangled){
+                mem = DSDistortion(memory);
+            }
+
+            var result = module.Sync(mem);
 
             if (!result) { syncFailure++; }
         }
@@ -105,11 +111,10 @@ public abstract class SyncModuleBase<T> : SyncModuleBase, IObserver<T>
 
     public bool Sync(InputMemory<T> memory)
     {
-        var mem = DSDistortion(memory);
-
-        if (_selfModules.All(x => x.Check(mem.value)))
+        if (_selfModules.All(x => x.Check(memory.value)))
         {
-            _selfModules.ForEach(x => x.Command(mem.value));
+            _selfModules.ForEach(x => x.Command(memory.value));
+            _memoryOfAction.Add(memory);
             return true;
         }
 
@@ -182,7 +187,7 @@ public abstract class SyncModuleBase<T> : SyncModuleBase, IObserver<T>
     }
 }
 
-public class InputMemory<M>
+public struct InputMemory<M>
 {
     //記憶の中身
     public M value { get; set; }

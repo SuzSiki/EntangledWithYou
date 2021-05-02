@@ -2,60 +2,61 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
-/*
-[System.Obsolete("you heard \"use it wisely!\" ")]
-public class TestPlayer : GridMoveBase, ITurnModule
+
+[RequireComponent(typeof(MotionModule), typeof(SONAR))]
+public class Player : MonoBehaviour, IRequireToLoad
 {
-    Dictionary<Vector2Int, List<IFieldSurface>> shuiKankyo = new Dictionary<Vector2Int, List<IFieldSurface>>()
+    public List<ILoad> requireComponentList { get; private set; }
+    public bool loaded { get; private set; }
+
+    void Start()
     {
-        {Vector2Int.down,null},
-        {Vector2Int.up,null},
-        {Vector2Int.right,null},
-        {Vector2Int.left,null},
-        {Vector2Int.zero,null}
-    };
+        sonar = GetComponent<SONAR>();
+        movementModule = GetComponent<MotionModule>();
+
+        requireComponentList = new List<ILoad>();
+        requireComponentList.Add(sonar);
+        LoadManager.instance.RegisterLoad(this);
+    }
 
 
-    /// <summary>
-    /// かっこいい時間…ではなく、次の入力までの時間
-    /// </summary>
-    /// <value></value>
-    [SerializeField] float coolTime = 1;
+    public void StartLoad()
+    {
+        sonar.Cast(transform.position);
+        state = ModuleState.ready;
+        loaded = true;
+    }
+
+
+    Dictionary<Vector2Int, List<IFieldSurface>> shuiKankyo
+    {
+        get{return sonar.shuiKankyo;}
+    }
 
     public ModuleState state { get; private set; }
 
+    SONAR sonar;
+    MotionModule movementModule;
 
-    GameManager gameManager;
-
-    public override void StartLoad()
+    public bool Input(int x, int y)
     {
-        gameManager = GameManager.instance;
-        base.StartLoad();
-
-        SONAR(transform.position);
-        state = ModuleState.ready;
-    }
-
-    protected override void Start()
-    {
-        requireComponentList.Add(GameManager.instance);
-        base.Start();
-    }
-
-    public void Input(int x, int y)
-    {
-        if (gameManager.turnReady && state != ModuleState.working)
+        if (state != ModuleState.working)
         {
             if (!(x == 1 && y == 1)) //斜め移動は許さない
             {
                 if (Check(x, y))
                 {
                     state = ModuleState.working;
-                    Move(x, y);
+                    Move(x, y, () => {
+                        sonar.Cast(transform.position);
+                        state = ModuleState.compleate;
+                    });
+                    return true;
                 }
             }
         }
 
+        return false;
     }
 
 
@@ -93,24 +94,6 @@ public class TestPlayer : GridMoveBase, ITurnModule
         return true;
     }
 
-
-    /// <summary>
-    /// 周囲環境をマー君
-    /// </summary>
-    void SONAR(Vector2 center)
-    {
-        shuiKankyo[Vector2Int.right] = TileSearchLazor(center, Vector2Int.right, shuiKankyo[Vector2Int.right]);
-        shuiKankyo[Vector2Int.left] = TileSearchLazor(center, Vector2Int.left, shuiKankyo[Vector2Int.left]);
-        shuiKankyo[Vector2Int.up] = TileSearchLazor(center, Vector2Int.up, shuiKankyo[Vector2Int.up]);
-        shuiKankyo[Vector2Int.down] = TileSearchLazor(center, Vector2Int.down, shuiKankyo[Vector2Int.down]);
-        shuiKankyo[Vector2Int.zero] = TileSearchLazor(center, Vector2Int.zero, shuiKankyo[Vector2Int.zero]);
-
-        return;
-    }
-
-
-
-
     void AttractOperation(Vector2Int direction)
     {
 
@@ -146,19 +129,15 @@ public class TestPlayer : GridMoveBase, ITurnModule
 
     }
 
-    protected override void Move(int x, int y, System.Action action = null)
+    protected void Move(int x, int y, System.Action action = null)
     {
-
-
         var _direction = new Vector2Int(x, y);
 
         AttractOperation(_direction);
 
         ContactOperation(_direction);
 
-        gameManager.StartTurn();
-
-        base.Move(x, y, action);
+        movementModule.Move(_direction, action);
     }
 
     void ContactOperation(Vector2Int direction)
@@ -177,13 +156,4 @@ public class TestPlayer : GridMoveBase, ITurnModule
             }
         }
     }
-
-    protected override IEnumerator MoveCoroutine(Vector2 moveVector, System.Action action)
-    {
-        yield return StartCoroutine(base.MoveCoroutine(moveVector, action));
-        yield return new WaitForSeconds(coolTime);
-        SONAR(transform.position);
-        state = ModuleState.compleate;
-    }
 }
-*/

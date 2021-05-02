@@ -4,44 +4,46 @@ using UnityEngine;
 
 public class Dimention : MonoBehaviour
 {
-    public int dimentionID{get{return _dimentionID;} private set{dimentionID = value;}}
+    public int dimentionID { get { return _dimentionID; } private set { dimentionID = value; } }
     [SerializeField] int _dimentionID;
-    TestPlayer myPlayer;
+    Player myPlayer;
     GameManager gameManager;
-    public bool active{get{return _active;}private set{_active = value;}}
+    public bool active { get { return _active; } private set { _active = value; } }
     [SerializeField] bool _active;
 
     void Start()
     {
-        myPlayer = GetComponentInChildren<TestPlayer>();
+        myPlayer = GetComponentInChildren<Player>();
         gameManager = GameManager.instance;
-        if(active){
-            gameManager.RegisterModule(myPlayer);
-        }
     }
 
 
     void Update()
     {
-        if(active){
+        if (active && gameManager.turnReady)
+        {
             HandleInput();
         }
     }
 
-    void HandleInput(){
+    void HandleInput()
+    {
         int x = (int)Input.GetAxisRaw("Horizontal");
         int y = (int)Input.GetAxisRaw("Vertical");
 
-        if(x != 0 || y != 0){
-            myPlayer.Input(x,y);
+        if (x != 0 || y != 0)
+        {
+            if (myPlayer.Input(x, y))
+            {
+
+                gameManager.StartTurn();
+            }
         }
     }
 
-    public void SetActive(bool isActive){
+    public void SetActive(bool isActive)
+    {
         active = isActive;
-        if(!isActive){
-            gameManager.DisregisterModule(myPlayer);
-        }
     }
 
 }
