@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7933863239944286266}
   - component: {fileID: 3280038121764366904}
-  - component: {fileID: -7174718074085579459}
-  - component: {fileID: -6260405949644074065}
+  - component: {fileID: 4093082961150431613}
+  - component: {fileID: 1268742704639148472}
   m_Layer: 0
-  m_Name: SFWallSideR
+  m_Name: SFWallSideL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 970040329
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1839858705187670513, guid: f8e1fd35d4ce239499b112b2565327e4, type: 3}
+  m_Sprite: {fileID: -2129945103493517889, guid: dd78787515170de4b963bb2e99256926, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-7174718074085579459
+--- !u!114 &4093082961150431613
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7035a3eb9df77d74e8b404ea8accc5a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &-6260405949644074065
+--- !u!61 &1268742704639148472
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

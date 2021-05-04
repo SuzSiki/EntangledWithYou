@@ -2,19 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dimention : MonoBehaviour
+public class Dimention : MonoBehaviour,IRequireToLoad
 {
+    public List<ILoad> requireComponentList{get{return _req;} private set{_req = value;}}
+    public bool loaded{get;private set;}
     public int dimentionID { get { return _dimentionID; } private set { dimentionID = value; } }
+    public int myLayerMask{get;private set;}
+    public Player player{get{return myPlayer;}}
+    public IGoal goal{get;private set;}
+    public bool active { get { return _active; } private set { _active = value; } }
     [SerializeField] int _dimentionID;
+    List<ILoad> _req = new List<ILoad>();
     Player myPlayer;
     GameManager gameManager;
-    public bool active { get { return _active; } private set { _active = value; } }
     [SerializeField] bool _active;
+    public static List<Dimention> dimentionList = new List<Dimention>();
+
+
+    void OnEnable()
+    {
+        dimentionList.Add(this);
+    }
 
     void Start()
     {
         myPlayer = GetComponentInChildren<Player>();
+        goal = GetComponentInChildren<IGoal>();
+        myLayerMask = 1 << LayerMask.NameToLayer("Dimention"+dimentionID);
         gameManager = GameManager.instance;
+
+        requireComponentList.Add(myPlayer);
+        LoadManager.instance.RegisterLoad(this);
+    }
+
+    public void StartLoad(){
+        loaded = true;
     }
 
 
@@ -44,6 +66,11 @@ public class Dimention : MonoBehaviour
     public void SetActive(bool isActive)
     {
         active = isActive;
+        myPlayer.Remap();
     }
 
+    void OnDisable()
+    {
+        dimentionList.Remove(this);
+    }
 }

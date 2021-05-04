@@ -12,7 +12,7 @@ public class LoadManager : Singleton<LoadManager>
     {
         StartCoroutine(LoadRoutine(requireClass));
     }
-
+    
     IEnumerator LoadRoutine(IRequireToLoad loadClass)
     {
         yield return 2;

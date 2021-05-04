@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 
 public class SyncronizeManager : SerializedSingleton<SyncronizeManager>,ILoad
 {
-    [SerializeField] Dictionary<List<SyncModuleBase>, SyncStateFlag> syncronizeList;
+    [SerializeField]Dictionary<List<SyncModuleBaseBase>, SyncStateFlag> syncronizeList;
     public bool loaded{get;private set;}
 
     void Start()
@@ -15,13 +16,13 @@ public class SyncronizeManager : SerializedSingleton<SyncronizeManager>,ILoad
         loaded = true;
     }
 
-    public void Syncronize(SyncModuleBase moduleA, SyncModuleBase moduleB, SyncStateFlag stateFlag)
+    public void Syncronize(SyncModuleBaseBase moduleA, SyncModuleBaseBase moduleB, SyncStateFlag stateFlag)
     {
         moduleA.AddBrother(moduleB, stateFlag);
         moduleB.AddBrother(moduleA, stateFlag);
     }
 
-    protected void SyncronizeAll(List<SyncModuleBase> modules, SyncStateFlag stateFlag)
+    protected void SyncronizeAll(List<SyncModuleBaseBase> modules, SyncStateFlag stateFlag)
     {
         foreach(var moduleA in modules){
             foreach(var moduleB in modules){

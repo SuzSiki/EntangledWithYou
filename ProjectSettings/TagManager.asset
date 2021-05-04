@@ -13,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - world
-  - 
-  - 
-  - 
-  - 
+  - worldFx
+  - Dimention0
+  - Dimention1
+  - Dim0Mask
+  - Dim1Mask
   - 
   - 
   - 
@@ -49,4 +49,7 @@ TagManager:
     locked: 0
   - name: FrontObj
     uniqueID: 970040329
+    locked: 0
+  - name: WorldEfx
+    uniqueID: 2781618159
     locked: 0

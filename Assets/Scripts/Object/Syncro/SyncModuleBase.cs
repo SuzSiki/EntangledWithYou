@@ -16,36 +16,31 @@ public enum SyncStateFlag
 /// 一つにまとめるためのインターフェイス。
 /// serializeするためにabstractにした。
 /// </summary>
-public abstract class SyncModuleBase : MonoBehaviour
+public abstract class SyncModuleBaseBase : SubjectBehaviour
 {
     protected Dimention myDimention;
 
-    public abstract bool AddBrother(SyncModuleBase rawModule, SyncStateFlag stateflag);
-    public abstract bool RemoveBrother(SyncModuleBase module);
-    public abstract bool AddConnectionState(SyncModuleBase rawModule, SyncStateFlag stateFlag);
-    public abstract bool SetConnectionState(SyncModuleBase rawModule, SyncStateFlag stateFlag);
-    public abstract bool ClearConnectionState(SyncModuleBase rawModule);
+    public abstract bool AddBrother(SyncModuleBaseBase rawModule, SyncStateFlag stateflag);
+    public abstract bool RemoveBrother(SyncModuleBaseBase module);
+    public abstract bool AddConnectionState(SyncModuleBaseBase rawModule, SyncStateFlag stateFlag);
+    public abstract bool SetConnectionState(SyncModuleBaseBase rawModule, SyncStateFlag stateFlag);
+    public abstract bool ClearConnectionState(SyncModuleBaseBase rawModule);
 }
 
-//型ごとの処理。
-/// <summary>
-/// SyncManagerとFieldObjectの仲介。
-/// </summary>
-public abstract class SyncModuleBase<T> : SyncModuleBase, IObserver<T>
+/*
+public abstract class SyncModuleBase : SyncModuleBaseBase, IObserver
 {
-
-
-    List<InputMemory<T>> _memoryOfAction =  new List<InputMemory<T>>();
-    List<SyncModuleBase<T>> _syncedList = new List<SyncModuleBase<T>>();
-    Dictionary<SyncModuleBase<T>, SyncStateFlag> syncStateDict = new Dictionary<SyncModuleBase<T>, SyncStateFlag>();
-    List<IGameModule<T>> _selfModules = new List<IGameModule<T>>();
+    List<int> _memoryOfDimention = new List<int>();
+    List<SyncModuleBase> _syncedList = new List<SyncModuleBase>();
+    Dictionary<SyncModuleBase, SyncStateFlag> syncStateDict = new Dictionary<SyncModuleBase, SyncStateFlag>();
+    List<ICommandableModule> _selfModules = new List<ICommandableModule>();
 
     void Start()
     {
-        GetComponents<IGameModule<T>>(_selfModules);
+        GetComponents<ICommandableModule>(_selfModules);
         myDimention = GetComponentInParent<Dimention>();
-        
-        
+
+
         foreach (var module in _selfModules)
         {
             module.AddObserver(this);
@@ -53,9 +48,9 @@ public abstract class SyncModuleBase<T> : SyncModuleBase, IObserver<T>
     }
 
 
-    public override bool AddBrother(SyncModuleBase rawModule, SyncStateFlag stateflag)
+    public override bool AddBrother(SyncModuleBaseBase rawModule, SyncStateFlag stateflag)
     {
-        if (rawModule is SyncModuleBase<T> module && !_syncedList.Contains(module))
+        if (rawModule is SyncModuleBase module && !_syncedList.Contains(module))
         {
             _syncedList.Add(module);
             syncStateDict[module] = stateflag;
@@ -65,9 +60,9 @@ public abstract class SyncModuleBase<T> : SyncModuleBase, IObserver<T>
         return false;
     }
 
-    public override bool RemoveBrother(SyncModuleBase rawModule)
+    public override bool RemoveBrother(SyncModuleBaseBase rawModule)
     {
-        if (rawModule is SyncModuleBase<T> module)
+        if (rawModule is SyncModuleBase module)
         {
             if (_syncedList.Contains(module))
             {
@@ -84,19 +79,20 @@ public abstract class SyncModuleBase<T> : SyncModuleBase, IObserver<T>
 
 
     //自分のモジュールが動いたとき
-    public virtual bool OnNotice(T arg)
+    public virtual bool OnNotice()
     {
-        var memory = new InputMemory<T>(arg, myDimention.dimentionID);
-        _memoryOfAction.Add(memory);
+        var memory = myDimention.dimentionID;
+        _memoryOfDimention.Add(memory);
 
         int syncFailure = 0;
 
         foreach (var module in _syncedList)
         {
             var mem = memory;
-            
-            if(syncStateDict[module] != SyncStateFlag.entangled){
-                mem = DSDistortion(memory);
+
+            if (syncStateDict[module] != SyncStateFlag.entangled)
+            {
+                DSDistortion();
             }
 
             var result = module.Sync(mem);
@@ -108,13 +104,12 @@ public abstract class SyncModuleBase<T> : SyncModuleBase, IObserver<T>
 
         return true;
     }
-
-    public bool Sync(InputMemory<T> memory)
+    public bool Sync(int memory)
     {
-        if (_selfModules.All(x => x.Check(memory.value)))
+        if (_selfModules.All(x => x.Check()))
         {
-            _selfModules.ForEach(x => x.Command(memory.value));
-            _memoryOfAction.Add(memory);
+            _selfModules.ForEach(x => x.Command());
+            _memoryOfDimention.Add(memory);
             return true;
         }
 
@@ -126,15 +121,15 @@ public abstract class SyncModuleBase<T> : SyncModuleBase, IObserver<T>
     /// </summary>
     /// <param name="memory"></param>
     /// <returns></returns>
-    protected abstract InputMemory<T> DSDistortion(InputMemory<T> memory);
+    protected abstract bool DSDistortion();
 
-    public override bool AddConnectionState(SyncModuleBase rawModule, SyncStateFlag stateFlag)
+    public override bool AddConnectionState(SyncModuleBaseBase rawModule, SyncStateFlag stateFlag)
     {
-        if (rawModule is SyncModuleBase<T> module)
+        if (rawModule is SyncModuleBase module)
         {
             if (_syncedList.Contains(module))
             {
-                var state = syncStateDict[module as SyncModuleBase<T>];
+                var state = syncStateDict[module as SyncModuleBase];
                 FlagManager<SyncStateFlag>.AppendFlag(ref state, stateFlag);
                 syncStateDict[module] = state;
 
@@ -149,13 +144,13 @@ public abstract class SyncModuleBase<T> : SyncModuleBase, IObserver<T>
         return false;
     }
 
-    public override bool SetConnectionState(SyncModuleBase rawModule, SyncStateFlag stateFlag)
+    public override bool SetConnectionState(SyncModuleBaseBase rawModule, SyncStateFlag stateFlag)
     {
-        if (rawModule is SyncModuleBase<T> module)
+        if (rawModule is SyncModuleBase module)
         {
             if (_syncedList.Contains(module))
             {
-                syncStateDict[module as SyncModuleBase<T>] = stateFlag;
+                syncStateDict[module as SyncModuleBase] = stateFlag;
                 return true;
             }
 
@@ -167,13 +162,13 @@ public abstract class SyncModuleBase<T> : SyncModuleBase, IObserver<T>
         return false;
     }
 
-    public override bool ClearConnectionState(SyncModuleBase rawModule)
+    public override bool ClearConnectionState(SyncModuleBaseBase rawModule)
     {
-        if (rawModule is SyncModuleBase<T> module)
+        if (rawModule is SyncModuleBase module)
         {
             if (_syncedList.Contains(module))
             {
-                syncStateDict[module as SyncModuleBase<T>] = 0;
+                syncStateDict[module as SyncModuleBase] = 0;
 
                 return true;
             }
@@ -186,6 +181,7 @@ public abstract class SyncModuleBase<T> : SyncModuleBase, IObserver<T>
         return false;
     }
 }
+*/
 
 public struct InputMemory<M>
 {
