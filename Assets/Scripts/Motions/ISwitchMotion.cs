@@ -2,5 +2,5 @@ using DG.Tweening;
 
 public interface ISwitchMotion
 {
-    Tween Switch(bool onOff);
+    Sequence Switch(bool onOff,bool active = true);
 }

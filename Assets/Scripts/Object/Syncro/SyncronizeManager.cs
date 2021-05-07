@@ -2,17 +2,19 @@ using UnityEngine;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
-public class SyncronizeManager : SerializedSingleton<SyncronizeManager>,ILoad
+public class SyncronizeManager : SerializedSingleton<SyncronizeManager>, ILoad
 {
-    [SerializeField]Dictionary<List<SyncModuleBaseBase>, SyncStateFlag> syncronizeList;
-    public bool loaded{get;private set;}
+    [SerializeField] Dictionary<List<SyncModuleBaseBase>, SyncStateFlag> syncronizeList;
+    public bool loaded { get; private set; }
 
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
         foreach (var bros in syncronizeList)
         {
-            SyncronizeAll(bros.Key,bros.Value);
+            SyncronizeAll(bros.Key, bros.Value);
         }
+        
         loaded = true;
     }
 
@@ -24,10 +26,13 @@ public class SyncronizeManager : SerializedSingleton<SyncronizeManager>,ILoad
 
     protected void SyncronizeAll(List<SyncModuleBaseBase> modules, SyncStateFlag stateFlag)
     {
-        foreach(var moduleA in modules){
-            foreach(var moduleB in modules){
-                if(moduleA != moduleB){
-                    Syncronize(moduleA,moduleB,stateFlag);                                                                                                                                                                         
+        foreach (var moduleA in modules)
+        {
+            foreach (var moduleB in modules)
+            {
+                if (moduleA != moduleB)
+                {
+                    Syncronize(moduleA, moduleB, stateFlag);
                 }
             }
         }

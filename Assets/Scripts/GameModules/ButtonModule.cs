@@ -14,11 +14,13 @@ public class ButtonModule : SubjectBehaviour<bool>, ITurnModule, IReactableModul
     protected virtual void Start()
     {
         toggleButton = GetComponent<IToggleMotion>();
-        if (toggleButton.nowState != defaultState)
-        {
+
+        if(defaultState == toggleButton.nowState){
+            Notice(defaultState);
+        }
+        else{
             Reaction();
         }
-
         state = ModuleState.ready;
     }
 

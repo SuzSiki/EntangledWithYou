@@ -47,6 +47,9 @@ TagManager:
   - name: Chara
     uniqueID: 1718055139
     locked: 0
+  - name: Objlight
+    uniqueID: 2059255197
+    locked: 0
   - name: FrontObj
     uniqueID: 970040329
     locked: 0

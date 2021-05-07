@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6157003943483602188}
   - component: {fileID: 880330395}
   - component: {fileID: 3876926573723887151}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c271e2de04fbe4c85c4b5643b75769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultState: 1
+  defaultState: 0
 --- !u!114 &3876926573723887151
 MonoBehaviour:
   m_ObjectHideFlags: 0

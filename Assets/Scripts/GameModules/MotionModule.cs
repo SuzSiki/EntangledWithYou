@@ -7,6 +7,7 @@ using UnityEngine.Assertions;
 public class MotionModule : GridMoveBase, ITurnModule, ISubject<Vector2Int>, IReactableModule<Vector2Int>, ICommandableModule<Vector2Int>
 {
     [SerializeField] bool allowOtoOInteraction = true;
+
     public ObjectAttribute attribute { get; protected set; }
 
     public ModuleState state { get; protected set; }

@@ -49,7 +49,7 @@ public class Player : MonoBehaviour, IRequireToLoad
     {
         if (state != ModuleState.working)
         {
-            if (!(x == 1 && y == 1)) //斜め移動は許さない
+            if (!(Mathf.Abs(x) == Mathf.Abs(y))) //斜め移動は許さない
             {
                 if (Check(x, y))
                 {

@@ -7,8 +7,6 @@ public class ToggleAnimMotion:MonoBehaviour,IToggleMotion
 {
     public bool nowState{get{return _nowState;}}
     protected Animator animator;
-    Sprite onSprite;
-    Sprite offSprite;
     new SpriteRenderer renderer;
     bool _nowState = false;
 
@@ -20,6 +18,7 @@ public class ToggleAnimMotion:MonoBehaviour,IToggleMotion
 
     public void Toggle(bool activate = true,System.Action onCompleate = null)
     {
+        Debug.Log("triggered");
         var seq = InitAnimSequence("Trigger",onCompleate);
 
         _nowState = !nowState;

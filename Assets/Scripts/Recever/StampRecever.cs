@@ -19,7 +19,7 @@ public class StampRecever : MonoBehaviour, IContactable
 
     public bool Check(Vector2Int direction)
     {
-        return true;
+        return StampModule.Check();
     }
 
     public void Contact(ContactContext context, Vector2Int direction)

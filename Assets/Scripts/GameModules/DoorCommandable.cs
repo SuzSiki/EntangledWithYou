@@ -1,10 +1,8 @@
 using UnityEngine;
 
 [RequireComponent(typeof(IToggleMotion))]
-public class DoorCommandable : SubjectBehaviour<bool>, ICommandableModule<bool>,IObserver,IFieldSurface
+public class DoorCommandable : SubjectBehaviour<bool>, ICommandableModule<bool>,IObserver,IReactableModule<Vector2Int>
 {
-    public ObjectAttribute attribute{get{return _attribute;}}
-    ObjectAttribute _attribute;
 
     IToggleMotion toggleMotion;
 
@@ -15,15 +13,8 @@ public class DoorCommandable : SubjectBehaviour<bool>, ICommandableModule<bool>,
 
     public bool Command(bool isOn, System.Action onCompleate)
     {
-        if(isOn){
-            FlagManager<ObjectAttribute>.AppendFlag(ref _attribute,ObjectAttribute.isSolid);
-        }
-        else{
-            FlagManager<ObjectAttribute>.RemoveFlag(ref _attribute,ObjectAttribute.isSolid);
-        }
-
         if(isOn != toggleMotion.nowState){
-            toggleMotion.Toggle();
+            toggleMotion.Toggle(onCompleate:onCompleate);
         }
         
         return true;
@@ -38,6 +29,22 @@ public class DoorCommandable : SubjectBehaviour<bool>, ICommandableModule<bool>,
     {
         return true;
     }
+
+    public bool Reaction(Vector2Int direction,System.Action onCompleate = null){
+        if(onCompleate!=null){
+            onCompleate();
+        }
+        
+        return true;
+    }
+
+    public bool Check(Vector2Int direction){
+        if(toggleMotion.nowState){
+            return true;
+        }
+        return false;
+    }
+
 
     public bool OnNotice(){
         throw new System.NotImplementedException();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public enum TurnState
 {
@@ -30,6 +31,7 @@ public class GameManager : Singleton<GameManager>, IRequireToLoad
     public List<ILoad> requireComponentList { get; private set; }
 
 
+    public bool finished{get{return finishing;}}
     bool finishing = false;
     List<ITurnModule> turnModules = new List<ITurnModule>();
     List<ITurnModule> oneTimeRegister = new List<ITurnModule>();
@@ -92,7 +94,7 @@ public class GameManager : Singleton<GameManager>, IRequireToLoad
             else
             {
 
-                var dim = Dimention.dimentionList.Find(x => !x.active && !x.goal.accomplished);
+                var dim = Dimention.dimentionList.Find(x => !x.active && !x.goal.accomplished );
                 if(dim != null){
                     SEKAIModule.instance.SwapDimention(dim.dimentionID);
                 }
