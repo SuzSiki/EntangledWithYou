@@ -61,6 +61,10 @@ public class Dimention : MonoBehaviour,IRequireToLoad
                 gameManager.StartTurn();
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.R)){
+            SEKAIModule.instance.DarkenTheWorld(SceneLoader.instance.Restart);
+        }
     }
 
     public void SetActive(bool isActive)

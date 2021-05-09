@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WorldFadeMotion : ImageFadeMotion
+public class WorldFadeMotion : GraphicFadeMotion
 {
 
     public static WorldFadeMotion instance = null;

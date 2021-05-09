@@ -1,17 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 [RequireComponent(typeof(TargetSpriteFadeMotion))]
 public class TurnModuleTracker : MonoBehaviour
 {
     [SerializeField] int targetFrame = 10;
-    public ITurnModule module{get;private set;}
+    public ITurnModule module { get; private set; }
     TargetSpriteFadeMotion fadeMotion;
     SpriteRenderer moduleRenderer;
     Dimention dimention;
 
-    public void Register(ITurnModule mod,Dimention dim){
+    Coroutine trackingCoroutine = null;
+
+
+    public void Register(ITurnModule mod, Dimention dim)
+    {
         dimention = dim;
         module = mod;
         moduleRenderer = module.gameObject.GetComponent<SpriteRenderer>();
@@ -19,29 +24,42 @@ public class TurnModuleTracker : MonoBehaviour
         StartCoroutine(Waitor());
     }
 
-    IEnumerator Waitor(){
-        while(!GameManager.instance.finished){
+    IEnumerator Waitor()
+    {
+        while (!GameManager.instance.finished)
+        {
             yield return targetFrame;
-            
-            if(module.state == ModuleState.working && !dimention.active){
-                yield return StartCoroutine(Tracker());
+
+            if (module.state == ModuleState.working && !dimention.active && trackingCoroutine == null)
+            {
+                yield return trackingCoroutine = StartCoroutine(Tracker());
             }
         }
 
         gameObject.SetActive(false);
     }
 
-    IEnumerator Tracker(){
-        
+    IEnumerator Tracker()
+    {
+
         fadeMotion.sprite = moduleRenderer.sprite;
         transform.position = module.gameObject.transform.position;
 
         var activeDim = Dimention.dimentionList.Find(x => x.active);
-        
+
+        if (activeDim == null)
+        {
+            yield break;
+        }
+
         gameObject.layer = activeDim.gameObject.layer;
 
-        fadeMotion.Enter();
-        while(module.state != ModuleState.compleate){
+        fadeMotion.Enter().onComplete += () =>
+        {
+            fadeMotion.Exit();
+        };
+        while (module.state != ModuleState.compleate)
+        {
 
             yield return targetFrame;
 
@@ -49,6 +67,6 @@ public class TurnModuleTracker : MonoBehaviour
             transform.position = module.gameObject.transform.position;
         }
 
-        fadeMotion.Exit();
+        trackingCoroutine = null;
     }
 }

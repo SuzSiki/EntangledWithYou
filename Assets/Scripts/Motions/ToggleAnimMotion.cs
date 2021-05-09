@@ -18,7 +18,6 @@ public class ToggleAnimMotion:MonoBehaviour,IToggleMotion
 
     public void Toggle(bool activate = true,System.Action onCompleate = null)
     {
-        Debug.Log("triggered");
         var seq = InitAnimSequence("Trigger",onCompleate);
 
         _nowState = !nowState;

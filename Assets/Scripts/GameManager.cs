@@ -28,10 +28,14 @@ public class GameManager : Singleton<GameManager>, IRequireToLoad
         }
     }
 
+    [SerializeField] bool autoStart = true;
+
     public List<ILoad> requireComponentList { get; private set; }
 
+    public int StepCount{get;private set;}
 
-    public bool finished{get{return finishing;}}
+
+    public bool finished { get { return finishing; } }
     bool finishing = false;
     List<ITurnModule> turnModules = new List<ITurnModule>();
     List<ITurnModule> oneTimeRegister = new List<ITurnModule>();
@@ -45,7 +49,6 @@ public class GameManager : Singleton<GameManager>, IRequireToLoad
         get { return _state; }
         set
         {
-            Debug.Log(value);
             _state = value;
         }
     }
@@ -63,6 +66,16 @@ public class GameManager : Singleton<GameManager>, IRequireToLoad
         {
             goals.Add(dimention.goal);
         }
+
+
+        if (autoStart)
+        {
+            StartGame();
+        }
+    }
+
+    public void StartGame()
+    {
         StartCoroutine(GameLoop());
 
         state = TurnState.turnReady;
@@ -76,6 +89,8 @@ public class GameManager : Singleton<GameManager>, IRequireToLoad
         LoadManager.instance.RegisterLoad(this);
     }
 
+    Coroutine swapCoroutine = null;
+
     IEnumerator GameLoop()
     {
         yield return new WaitUntil(() =>
@@ -88,25 +103,33 @@ public class GameManager : Singleton<GameManager>, IRequireToLoad
             }
             if (Dimention.dimentionList.All(x => x.goal.accomplished))
             {
-                Debug.Log(accGoal.Count);
                 return true;
             }
-            else
+            else if(swapCoroutine == null)
             {
 
-                var dim = Dimention.dimentionList.Find(x => !x.active && !x.goal.accomplished );
-                if(dim != null){
-                    SEKAIModule.instance.SwapDimention(dim.dimentionID);
+                var dim = Dimention.dimentionList.Find(x => !x.active && !x.goal.accomplished);
+                if (dim != null)
+                {
+                    swapCoroutine = StartCoroutine(DimentionSwapper(dim));
                 }
 
                 return false;
             }
 
+            return false;
         });
 
-         Debug.Log("end");
+        Debug.Log("end");
 
         finishing = true;
+    }
+
+    IEnumerator  DimentionSwapper(Dimention dimention)
+    {
+        SEKAIModule.instance.SwapDimention(dimention.dimentionID);
+        yield return new WaitUntil(()=>dimention.active);
+        swapCoroutine = null;
     }
 
     public bool DisregisterModule(ITurnModule module)
@@ -157,6 +180,8 @@ public class GameManager : Singleton<GameManager>, IRequireToLoad
 
     public bool StartTurn()
     {
+        StepCount++;
+        Debug.Log(StepCount);
         if (state == TurnState.turnReady)
         {
             state = TurnState.inTurn;

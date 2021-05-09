@@ -1,22 +1,37 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
+using System.Collections;
 
-[RequireComponent(typeof(IToggleMotion))]
-public class DoorCommandable : SubjectBehaviour<bool>, ICommandableModule<bool>,IObserver,IReactableModule<Vector2Int>
+[RequireComponent(typeof(IToggleMotion), typeof(GridCheckBase))]
+public class DoorCommandable : SubjectBehaviour<bool>, ICommandableModule<bool>, IObserver, IReactableModule
 {
 
     IToggleMotion toggleMotion;
+    GridCheckBase checker;
+    List<IFieldSurface> mySurfaceList = new List<IFieldSurface>();
 
     void Start()
     {
+        checker = GetComponent<GridCheckBase>();
         toggleMotion = GetComponent<IToggleMotion>();
+        StartCoroutine(Initialize());
+    }
+
+    IEnumerator Initialize()
+    {
+
+        yield return new WaitUntil(() => checker.loaded);
+        checker.TileSearchLazor(this.transform.position, Vector2Int.zero, ref mySurfaceList);
     }
 
     public bool Command(bool isOn, System.Action onCompleate)
     {
-        if(isOn != toggleMotion.nowState){
-            toggleMotion.Toggle(onCompleate:onCompleate);
+        if (isOn != toggleMotion.nowState)
+        {
+            toggleMotion.Toggle(onCompleate: onCompleate);
         }
-        
+
         return true;
     }
 
@@ -27,26 +42,39 @@ public class DoorCommandable : SubjectBehaviour<bool>, ICommandableModule<bool>,
     /// <returns></returns>
     public bool Check(bool isOn)
     {
-        return true;
+        List<IFieldSurface> surfaces = new List<IFieldSurface>();
+        checker.TileSearchLazor(this.transform.position, Vector2Int.zero, ref surfaces);
+        surfaces = surfaces.Except(mySurfaceList).ToList();
+        if (surfaces.Count == 0)
+        {
+            return true;
+        }
+        Debug.Log("found something");
+        return false;
     }
 
-    public bool Reaction(Vector2Int direction,System.Action onCompleate = null){
-        if(onCompleate!=null){
+    public bool Reaction(System.Action onCompleate = null)
+    {
+        if (onCompleate != null)
+        {
             onCompleate();
         }
-        
+
         return true;
     }
 
-    public bool Check(Vector2Int direction){
-        if(toggleMotion.nowState){
+    public bool Check()
+    {
+        if (toggleMotion.nowState)
+        {
             return true;
         }
         return false;
     }
 
 
-    public bool OnNotice(){
+    public bool OnNotice()
+    {
         throw new System.NotImplementedException();
     }
 

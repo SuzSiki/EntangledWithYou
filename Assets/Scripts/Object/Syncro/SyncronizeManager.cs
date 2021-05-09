@@ -4,17 +4,17 @@ using Sirenix.OdinInspector;
 
 public class SyncronizeManager : SerializedSingleton<SyncronizeManager>, ILoad
 {
-    [SerializeField] Dictionary<List<SyncModuleBaseBase>, SyncStateFlag> syncronizeList;
+    [SerializeField] DictionaryForAllHumankind _syncronizeList;
     public bool loaded { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
-        foreach (var bros in syncronizeList)
+        foreach (var bros in _syncronizeList.dictionary)
         {
-            SyncronizeAll(bros.Key, bros.Value);
+            SyncronizeAll(bros.key, bros.value);
         }
-        
+
         loaded = true;
     }
 
@@ -39,4 +39,3 @@ public class SyncronizeManager : SerializedSingleton<SyncronizeManager>, ILoad
     }
 
 }
-

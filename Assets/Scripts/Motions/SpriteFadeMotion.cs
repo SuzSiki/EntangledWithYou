@@ -11,15 +11,17 @@ public class SpriteFadeMotion : EnterExitModule
     [SerializeField] float outDuration = 1;
     [SerializeField] Ease inEase = Ease.InExpo;
     [SerializeField] Ease outEase = Ease.OutExpo;
-    [SerializeField] Color defaultColor = Color.clear;
-    
+    [SerializeField] float defaultAlpha = 1;
+
     [SerializeField] float maxFade = 1;
     protected SpriteRenderer panel;
 
     protected override void Initialize()
     {
         panel = GetComponentInChildren<SpriteRenderer>();
-        panel.color = defaultColor;
+        var color = panel.color;
+        color.a = defaultAlpha;
+        panel.color = color;
     }
 
     public override Sequence Enter(float timescale = 1, bool activate = true)

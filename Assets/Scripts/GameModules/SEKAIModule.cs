@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 
 public class SEKAIModule : SerializedSingleton<SEKAIModule>, ITurnModule, IRequireToLoad
 {
     public ModuleState state { get; private set; }
-    [SerializeField] int? defaultDimention = null;
+    [SerializeField] int defaultDimention = 0;
+    [SerializeField] bool setDefault = true;
+
     public bool loaded { get; private set; }
     public List<ILoad> requireComponentList { get { return requires; } }
     List<ILoad> requires = new List<ILoad>();
@@ -24,9 +27,9 @@ public class SEKAIModule : SerializedSingleton<SEKAIModule>, ITurnModule, IRequi
         loaded = true;
         state = ModuleState.ready;
 
-        if (defaultDimention != null)
+        if (setDefault)
         {
-            SwapDimention(defaultDimention.Value);
+            SwapDimention(defaultDimention);
         }
     }
 
@@ -41,23 +44,39 @@ public class SEKAIModule : SerializedSingleton<SEKAIModule>, ITurnModule, IRequi
     public bool SwapDimention(int dimentionID)
     {
         GameManager.instance.RegisterOnce(this);
-        GameManager.instance.StartTurn();
 
 
-        Dimention.dimentionList.Find(x => x.active).SetActive(false);
+        var activDim = Dimention.dimentionList.Find(x => x.active);
 
-        fadeMotion.Enter().onComplete = () =>
+        if (activDim != null)
+        {
+            activDim.SetActive(false);
+        }
+
+        fadeMotion.Enter().onComplete += () =>
         {
             swapper.ShowWorld(dimentionID);
             fadeMotion.Exit().onComplete += () =>
             {
                 state = ModuleState.compleate;
+                Dimention.dimentionList.Find(x => x.dimentionID == dimentionID).SetActive(true);
             };
         };
 
-        Dimention.dimentionList.Find(x => x.dimentionID == dimentionID).SetActive(true);
-
         return true;
+    }
+
+    public void DarkenTheWorld(System.Action onCompleate = null)
+    {
+        Dimention.dimentionList.Find(x => x.active).SetActive(false);
+        fadeMotion.Enter().onComplete += () =>
+        {
+            if (onCompleate != null)
+            {
+                onCompleate();
+            }
+        };
+
     }
 
 }

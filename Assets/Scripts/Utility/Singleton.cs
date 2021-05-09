@@ -18,7 +18,7 @@ where T : Singleton<T>
         }
         else{
             Debug.LogWarning( this.GetType() + "is singleton! now been killed");
-            Destroy(this.gameObject);
+            Destroy(this);
         }
     }
 

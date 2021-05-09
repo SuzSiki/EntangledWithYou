@@ -37,7 +37,7 @@ public class GridCheckBase : MonoBehaviour, IRequireToLoad
     }
 
     KeyValuePair<Vector2, List<IFieldSurface>> centerObj = new KeyValuePair<Vector2, List<IFieldSurface>>();
-    protected void TileSearchLazor(Vector2 center, Vector2Int direction, ref List<IFieldSurface> fieldObjects)
+    public void TileSearchLazor(Vector2 center, Vector2Int direction, ref List<IFieldSurface> fieldObjects)
     {
         if (fieldObjects == null)
         {

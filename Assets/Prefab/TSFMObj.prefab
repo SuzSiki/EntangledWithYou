@@ -50,8 +50,8 @@ MonoBehaviour:
   outDuration: 0.5
   inEase: 17
   outEase: 18
-  defaultColor: {r: 1, g: 1, b: 1, a: 0}
-  maxFade: 0.7
+  defaultAlpha: 1
+  maxFade: 0.5
 --- !u!114 &5524773259850538735
 MonoBehaviour:
   m_ObjectHideFlags: 0
